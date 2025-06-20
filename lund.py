@@ -4,9 +4,6 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 import requests
 
-# ----------------------------
-# Dataset (Demo Example)
-# ----------------------------
 data = {
     'height': [150, 155, 160, 165, 170, 175, 180],
     'weight': [45, 50, 55, 60, 65, 70, 75],
@@ -20,9 +17,6 @@ y = df['bust_size_cm']
 model = LinearRegression()
 model.fit(X, y)
 
-# ----------------------------
-# Helper Functions
-# ----------------------------
 def cm_to_bra_size(cm):
     band = int((cm - 60) * 0.7) + 28
     cups = ["AA", "A", "B", "C", "D", "DD", "E", "F"]
@@ -56,14 +50,11 @@ def send_to_telegram(name, height, weight, age, bra_size):
     payload = {"chat_id": chat_id, "text": message}
     requests.post(url, data=payload)
 
-# ----------------------------
-# Page Setup & Custom CSS
-# ----------------------------
 st.set_page_config(page_title="🎀 BRAMATCH | ANIME FIT ✨ + WAIFU PICK 🎎🌸", page_icon="🌸", layout="centered")
 
 anime_css = """
 <style>
-/* Background */
+
 [data-testid="stAppViewContainer"] {
     background-image: url('https://files.catbox.moe/mnkg4d.jpg');
     background-size: cover;
@@ -72,8 +63,6 @@ anime_css = """
 [data-testid="stSidebar"] {
     background-color: transparent;
 }
-
-/* Top Left Logo */
 .top-left-logo {
     position: absolute;
     top: 15px;
@@ -91,8 +80,6 @@ anime_css = """
     text-shadow: 2px 2px 5px black, 0 0 10px #ff0000, 0 0 20px #ff0000;
     font-size: 22px;
 }
-
-/* Glowing Yellow Title - More Visible, Strong Neon */
 .glow-title {
     text-align: center;
     font-size: 52px;
@@ -111,8 +98,6 @@ anime_css = """
     background: rgba(255, 255, 255, 0.07);
     border: 2px solid #ff99ff;
 }
-
-/* Glass Box */
 .glass {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
@@ -125,8 +110,6 @@ anime_css = """
     width: 90%;
     max-width: 700px;
 }
-
-/* General Headings */
 h1, h2, h3 {
     color: #FF66C4;
     font-family: 'Comic Sans MS', cursive, sans-serif;
@@ -135,8 +118,6 @@ h1, h2, h3 {
         0 0 15px #FF66C4,
         0 0 30px #FF66C4;
 }
-
-/* Buttons */
 .stButton>button {
     background-color: #FF69B4;
     color: white;
@@ -150,8 +131,6 @@ h1, h2, h3 {
     background-color: #e60073;
     box-shadow: 0 0 15px #ff66c4, 0 0 30px #ff66c4, 0 0 60px #ff66c4;
 }
-
-/* Anime Waifu Caption UNDER IMAGE - Neon Enhanced */
 .waifu-caption {
     text-align: center;
     font-size: 26px;
@@ -169,10 +148,7 @@ h1, h2, h3 {
 """
 st.markdown(anime_css, unsafe_allow_html=True)
 
-
-# Top-left logo link
 st.markdown('<div class="top-left-logo"><a href="#" target="_blank">KUROX Creations</a></div>', unsafe_allow_html=True)
-
 
 st.markdown(
     """
@@ -207,9 +183,6 @@ st.markdown("""
 
 <div class="big-neon-thanks">Thanks for using this 💖</div>
 """, unsafe_allow_html=True)
-
-
-
 
 with st.form("fit_form"):
     name = st.text_input("📝 Your Name")
@@ -254,7 +227,6 @@ if submitted:
     st.markdown(f"<h2 style='text-align:center;'>🎎 Your Anime Inspiration 🎎</h2>", unsafe_allow_html=True)
     st.image(character_image, width=300, caption=f"✨ {character_name} ✨")
 
-    # 📨 Send result to Telegram
     send_to_telegram(name, height, weight, age, bra_size)
 
 st.markdown("</div>", unsafe_allow_html=True)
